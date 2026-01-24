@@ -50,7 +50,7 @@ public class Entry
 
         string prompt = parts[2];
 
-        // In case response contains |, re-join everything after index 2
+        // In case the response contains |, re-join everything after index 2
         string response = string.Join("|", parts.Skip(3));
 
         return new Entry(date, prompt, response, mood);
