@@ -2,42 +2,60 @@ using System;
 
 public class Entry
 {
-    public string Date { get; set; }
-    public string PromptText { get; set; }
-    public string ResponseText { get; set; }
+    private string _date;
+    private string _promptText;
+    private string _responseText;
+    private int _mood;
 
-    // EXCEEDING REQUIREMENTS:
-    // Added a Mood field (1–5) to each entry and included it in file save/load.
-    public int Mood { get; set; }
-
-    public Entry() { }
+    public Entry()
+    {
+    }
 
     public Entry(string date, string promptText, string responseText, int mood)
     {
-        Date = date;
-        PromptText = promptText;
-        ResponseText = responseText;
-        Mood = mood;
+        _date = date;
+        _promptText = promptText;
+        _responseText = responseText;
+        _mood = mood;
+    }
+
+    public string GetDate()
+    {
+        return _date;
+    }
+
+    public string GetPromptText()
+    {
+        return _promptText;
+    }
+
+    public string GetResponseText()
+    {
+        return _responseText;
+    }
+
+    public int GetMood()
+    {
+        return _mood;
     }
 
     public void Display()
     {
-        Console.WriteLine($"Date: {Date} - Mood: {Mood}/5 - Prompt: {PromptText}");
-        Console.WriteLine(ResponseText);
+        Console.WriteLine($"Date: {_date} - Mood: {_mood}/5 - Prompt: {_promptText}");
+        Console.WriteLine(_responseText);
         Console.WriteLine();
     }
 
-    // EXCEEDING REQUIREMENTS:
-    // Save mood in the file so it persists between sessions.
-    // Format: Date|Mood|Prompt|Response
+
     public string ToFileLine()
     {
-        return $"{Date}|{Mood}|{PromptText}|{ResponseText}";
+        return $"{_date}|{_mood}|{_promptText}|{_responseText}";
     }
 
     public static Entry FromFileLine(string line)
     {
         string[] parts = line.Split("|");
+
         if (parts.Length < 4)
         {
             return new Entry("", "", "", 0);
@@ -50,9 +68,9 @@ public class Entry
 
         string prompt = parts[2];
 
-        // In case the response contains |, re-join everything after index 2
-        string response = string.Join("|", parts.Skip(3));
+        string response = string.Join("|", parts, 3, parts.Length - 3);
 
         return new Entry(date, prompt, response, mood);
     }
 }
+

@@ -27,8 +27,7 @@ class Program
                 Console.Write("> ");
                 string response = Console.ReadLine();
 
-                // EXCEEDING REQUIREMENTS:
-                // Ask the user for a mood rating (1–5) and store it with the entry.
+                // EXCEEDING REQUIREMENTS: Ask the user for a mood rating (1–5) and store it with the entry.
                 int mood = GetMoodFromUser();
 
                 string date = DateTime.Now.ToShortDateString();
