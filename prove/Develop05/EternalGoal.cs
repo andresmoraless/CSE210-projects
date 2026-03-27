@@ -10,6 +10,11 @@ public class EternalGoal : Goal
         return _goalScoreValue;
     }
 
+    public override bool IsComplete()
+    {
+        return false;
+    }
+
     public override string GetStringRepresentation()
     {
         return $"EternalGoal,{_goalName},{_goalDescription},{_goalScoreValue}";

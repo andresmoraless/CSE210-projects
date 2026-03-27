@@ -1,5 +1,11 @@
 using System;
 
+/*
+I exceeded the requirements by adding a level system based on the user's
+total points and displaying random motivational messages when a goal is recorded
+to make the program more engaging!
+*/
+
 class Program
 {
     static void Main(string[] args)
@@ -22,7 +28,7 @@ class Program
             if (choice == "1")
                 manager.CreateGoal();
             else if (choice == "2")
-                manager.DisplayGoalShort();
+                manager.DisplayGoalsShort();
             else if (choice == "3")
                 manager.RecordEvent();
             else if (choice == "4")
@@ -31,8 +37,8 @@ class Program
                 manager.LoadGoals("goals.txt");
             else if (choice == "6")
             {
-            Console.WriteLine($"Total Points: {manager.totalPoints}");
-            Console.WriteLine($"Rank: {manager.GetRank()}");
+                Console.WriteLine($"Total Points: {manager.GetTotalPoints()}");
+                Console.WriteLine($"Rank: {manager.GetRank()}");
             }
             else if (choice == "7")
                 break;

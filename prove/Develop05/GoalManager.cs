@@ -1,23 +1,34 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+
 public class GoalManager
 {
-    public int totalPoints = 0;
-    private List<Goal> goals = new List<Goal>();
+    private int _totalPoints = 0;
+    private List<Goal> _goals = new List<Goal>();
+
+    public int GetTotalPoints()
+    {
+        return _totalPoints;
+    }
 
     public void GainPoints(int points)
     {
-        totalPoints += points;
+        _totalPoints += points;
     }
+
     public string GetRank()
     {
-    if (totalPoints >= 5000)
-        return "Master";
-    else if (totalPoints >= 2000)
-        return "Champion";
-    else if (totalPoints >= 1000)
-        return "Achiever";
-    else
-        return "Beginner";
+        if (_totalPoints >= 5000)
+            return "Master";
+        else if (_totalPoints >= 2000)
+            return "Champion";
+        else if (_totalPoints >= 1000)
+            return "Achiever";
+        else
+            return "Beginner";
     }
+
     public void CreateGoal()
     {
         Console.WriteLine("1. Simple Goal");
@@ -30,18 +41,18 @@ public class GoalManager
         string name = Console.ReadLine();
 
         Console.Write("Description: ");
-        string desc = Console.ReadLine();
+        string description = Console.ReadLine();
 
         Console.Write("Points: ");
         int points = int.Parse(Console.ReadLine());
 
         if (type == "1")
         {
-            goals.Add(new SimpleGoal(name, desc, points));
+            _goals.Add(new SimpleGoal(name, description, points));
         }
         else if (type == "2")
         {
-            goals.Add(new EternalGoal(name, desc, points));
+            _goals.Add(new EternalGoal(name, description, points));
         }
         else if (type == "3")
         {
@@ -51,26 +62,44 @@ public class GoalManager
             Console.Write("Bonus points: ");
             int bonus = int.Parse(Console.ReadLine());
 
-            goals.Add(new ChecklistGoal(name, desc, points, target, bonus));
+            _goals.Add(new ChecklistGoal(name, description, points, target, bonus));
         }
     }
 
-    public void DisplayGoalShort()
+    public void DisplayGoalsShort()
     {
-        for (int i = 0; i < goals.Count; i++)
+        if (_goals.Count == 0)
         {
-            Console.WriteLine($"{i + 1}. {goals[i].GetInfo()}");
+            Console.WriteLine("No goals created yet.");
+            return;
+        }
+
+        for (int i = 0; i < _goals.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. {_goals[i].GetInfo()}");
         }
     }
 
     public void RecordEvent()
     {
-        DisplayGoalShort();
+        if (_goals.Count == 0)
+        {
+            Console.WriteLine("No goals available.");
+            return;
+        }
+
+        DisplayGoalsShort();
 
         Console.Write("Which goal did you complete? ");
         int index = int.Parse(Console.ReadLine()) - 1;
 
-        int points = goals[index].RecordEvent();
+        if (index < 0 || index >= _goals.Count)
+        {
+            Console.WriteLine("Invalid goal selection.");
+            return;
+        }
+
+        int points = _goals[index].RecordEvent();
         GainPoints(points);
 
         Console.WriteLine($"You earned {points} points!");
@@ -84,33 +113,79 @@ public class GoalManager
             "Nice work!"
         };
 
-        Random rand = new Random();
-        int i = rand.Next(messages.Count);
+        Random random = new Random();
+        int randomIndex = random.Next(messages.Count);
 
-        Console.WriteLine(messages[i]);
+        Console.WriteLine(messages[randomIndex]);
     }
 
     public void SaveGoals(string filepath)
     {
         List<string> lines = new List<string>();
 
-        foreach (Goal g in goals)
+        lines.Add($"TotalPoints,{_totalPoints}");
+
+        foreach (Goal goal in _goals)
         {
-            lines.Add(g.GetStringRepresentation());
+            lines.Add(goal.GetStringRepresentation());
         }
 
         File.WriteAllLines(filepath, lines);
+
+        Console.WriteLine("Goals saved successfully.");
     }
 
     public void LoadGoals(string filepath)
     {
-        if (!File.Exists(filepath)) return;
+        if (!File.Exists(filepath))
+        {
+            Console.WriteLine("Save file not found.");
+            return;
+        }
 
         string[] lines = File.ReadAllLines(filepath);
 
+        _goals.Clear();
+        _totalPoints = 0;
+
         foreach (string line in lines)
         {
-            Console.WriteLine(line);
+            string[] parts = line.Split(",");
+
+            if (parts[0] == "TotalPoints")
+            {
+                _totalPoints = int.Parse(parts[1]);
+            }
+            else if (parts[0] == "SimpleGoal")
+            {
+                string name = parts[1];
+                string description = parts[2];
+                int points = int.Parse(parts[3]);
+                bool isComplete = bool.Parse(parts[4]);
+
+                _goals.Add(new SimpleGoal(name, description, points, isComplete));
+            }
+            else if (parts[0] == "EternalGoal")
+            {
+                string name = parts[1];
+                string description = parts[2];
+                int points = int.Parse(parts[3]);
+
+                _goals.Add(new EternalGoal(name, description, points));
+            }
+            else if (parts[0] == "ChecklistGoal")
+            {
+                string name = parts[1];
+                string description = parts[2];
+                int points = int.Parse(parts[3]);
+                int timesCompleted = int.Parse(parts[4]);
+                int target = int.Parse(parts[5]);
+                int bonus = int.Parse(parts[6]);
+
+                _goals.Add(new ChecklistGoal(name, description, points, target, bonus, timesCompleted));
+            }
         }
+
+        Console.WriteLine("Goals loaded successfully.");
     }
 }

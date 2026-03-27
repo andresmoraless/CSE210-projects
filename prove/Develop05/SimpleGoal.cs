@@ -8,6 +8,12 @@ public class SimpleGoal : Goal
         _isComplete = false;
     }
 
+    public SimpleGoal(string name, string description, int value, bool isComplete)
+        : base(name, description, value)
+    {
+        _isComplete = isComplete;
+    }
+
     public override int RecordEvent()
     {
         if (!_isComplete)
@@ -15,6 +21,7 @@ public class SimpleGoal : Goal
             _isComplete = true;
             return _goalScoreValue;
         }
+
         return 0;
     }
 

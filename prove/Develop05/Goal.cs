@@ -21,9 +21,14 @@ public class Goal
         return false;
     }
 
+    public virtual string GetStatus()
+    {
+        return IsComplete() ? "[X]" : "[ ]";
+    }
+
     public virtual string GetInfo()
     {
-        return $"{_goalName} ({_goalDescription})";
+        return $"{GetStatus()} {_goalName} ({_goalDescription})";
     }
 
     public virtual string GetStringRepresentation()
