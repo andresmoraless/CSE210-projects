@@ -34,4 +34,9 @@ public class Cycling : Activity
     {
         return 60 / _speed;
     }
+
+    public override double GetCaloriesBurned()
+    {
+        return GetMinutes() * 8;
+    }
 }

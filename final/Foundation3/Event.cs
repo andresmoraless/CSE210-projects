@@ -81,4 +81,8 @@ public class Event
     {
         return $"Event Type: {GetType().Name}\nTitle: {_title}\nDate: {_date}";
     }
+    public virtual string GetReminderMessage()
+    {
+        return $"Reminder: {_title} is happening on {_date} at {_time}.";
+    }
 }

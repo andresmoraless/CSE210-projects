@@ -36,4 +36,8 @@ public class Lecture : Event
     {
         return $"Event Type: Lecture\n{GetStandardDetails()}\nSpeaker: {_speaker}\nCapacity: {_capacity}";
     }
+    public override string GetReminderMessage()
+    {
+        return $"Reminder: Lecture \"{GetTitle()}\" with speaker {_speaker} is happening on {GetDate()} at {GetTime()}.";
+    }
 }

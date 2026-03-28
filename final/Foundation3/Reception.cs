@@ -24,4 +24,8 @@ public class Reception : Event
     {
         return $"Event Type: Reception\n{GetStandardDetails()}\nRSVP Email: {_rsvpEmail}";
     }
+    public override string GetReminderMessage()
+    {
+        return $"Reminder: Reception \"{GetTitle()}\" is on {GetDate()} at {GetTime()}. RSVP at {_rsvpEmail}.";
+    }
 }

@@ -29,6 +29,21 @@ public class Video
         return _comments;
     }
 
+    public Comment GetLongestComment()
+{
+    Comment longest = _comments[0];
+
+    foreach (Comment comment in _comments)
+    {
+        if (comment.GetText().Length > longest.GetText().Length)
+        {
+            longest = comment;
+        }
+    }
+
+    return longest;
+}
+
     public string GetTitle()
     {
         return _title;

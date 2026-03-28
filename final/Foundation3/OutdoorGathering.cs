@@ -24,4 +24,8 @@ public class OutdoorGathering : Event
     {
         return $"Event Type: Outdoor Gathering\n{GetStandardDetails()}\nWeather Forecast: {_weather}";
     }
+    public override string GetReminderMessage()
+    {
+        return $"Reminder: Outdoor Gathering \"{GetTitle()}\" is on {GetDate()} at {GetTime()}. Weather forecast: {_weather}.";
+    }
 }

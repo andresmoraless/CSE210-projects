@@ -1,6 +1,13 @@
 using System;
 using System.Collections.Generic;
 
+/* 
+I exceeded requirements by adding a method to get the longest comment for each video. 
+I thought it would be fun to see which comment was the longest for each video, 
+and it also gave me a chance to practice working with lists and finding specific items 
+based on criteria.
+*/
+
 class Program
 {
     static void Main(string[] args)
@@ -33,11 +40,16 @@ class Program
 
         foreach (Video video in videos)
         {
-            Console.WriteLine("----------------------------------------");
+            Console.WriteLine("________________________________________");
             Console.WriteLine($"Title: {video.GetTitle()}");
             Console.WriteLine($"Author: {video.GetAuthor()}");
             Console.WriteLine($"Length: {video.GetLength()} seconds");
             Console.WriteLine($"Number of Comments: {video.GetCommentCount()}");
+
+            Comment longestComment = video.GetLongestComment();
+            Console.WriteLine($"Longest Comment by: {longestComment.GetCommenterName()}");
+            Console.WriteLine($"Longest Comment Text: {longestComment.GetText()}");
+
             Console.WriteLine("Comments:");
 
             foreach (Comment comment in video.GetComments())

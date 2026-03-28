@@ -1,6 +1,14 @@
 using System;
 using System.Collections.Generic;
 
+/* 
+I exceeded requirements by adding an extra reminder message feature for each event type.
+In addition to the required standard details, full details, and short description,
+the program now also shows a custom reminder for each event.
+This reminder is different depending on whether the event is a Lecture,
+Reception, or Outdoor Gathering, which adds more useful information.
+*/
+
 class Program
 {
     static void Main(string[] args)
@@ -53,6 +61,10 @@ class Program
 
             Console.WriteLine("SHORT DESCRIPTION");
             Console.WriteLine(ev.GetShortDescription());
+
+            Console.WriteLine("REMINDER");
+            Console.WriteLine(ev.GetReminderMessage());
+
             Console.WriteLine("--------------------------------------------------");
         }
     }

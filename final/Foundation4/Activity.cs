@@ -46,8 +46,13 @@ public class Activity
         return 0;
     }
 
-    public string GetSummary()
+    public virtual double GetCaloriesBurned()
     {
-        return $"{_date} {GetType().Name} ({_minutes} min): Distance {GetDistance():0.0} miles, Speed {GetSpeed():0.0} mph, Pace: {GetPace():0.0} min per mile";
+        return 0;
+    }
+
+    public virtual string GetSummary()
+    {
+        return $"{_date} {GetType().Name} ({_minutes} min): Distance {GetDistance():0.0} miles, Speed {GetSpeed():0.0} mph, Pace: {GetPace():0.0} min per mile, Calories: {GetCaloriesBurned():0.0}";
     }
 }

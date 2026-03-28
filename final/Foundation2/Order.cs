@@ -34,23 +34,7 @@ public class Order
 
     public double GetTotalCost()
     {
-        double total = 0;
-
-        foreach (Product product in _products)
-        {
-            total += product.GetTotalCost();
-        }
-
-        if (_customer.LivesInUSA())
-        {
-            total += 5;
-        }
-        else
-        {
-            total += 35;
-        }
-
-        return total;
+        return GetProductsTotal() + GetShippingCost();
     }
 
     public string GetPackingLabel()
@@ -68,5 +52,29 @@ public class Order
     public string GetShippingLabel()
     {
         return $"Shipping Label:\n{_customer.GetName()}\n{_customer.GetAddress().ToStringAddress()}";
+    }
+
+    public double GetProductsTotal()
+    {
+        double total = 0;
+
+        foreach (Product product in _products)
+        {
+            total += product.GetTotalCost();
+        }
+
+        return total;
+    }
+
+    public double GetShippingCost()
+    {
+        if (_customer.LivesInUSA())
+        {
+            return 5;
+        }
+        else
+        {
+            return 35;
+        }
     }
 }

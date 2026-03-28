@@ -34,4 +34,9 @@ public class Running : Activity
     {
         return GetMinutes() / GetDistance();
     }
+
+    public override double GetCaloriesBurned()
+    {
+        return GetMinutes() * 10;
+    }
 }

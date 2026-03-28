@@ -1,6 +1,13 @@
 using System;
 using System.Collections.Generic;
 
+/* 
+I exceeded requirements by adding a detailed cost breakdown for each order.
+In addition to the required total cost, I created separate methods to calculate
+the products subtotal and shipping cost, and displayed all three values in the
+output to make it more specific.
+*/
+
 class Program
 {
     static void Main(string[] args)
@@ -29,6 +36,8 @@ class Program
             Console.WriteLine(order.GetPackingLabel());
             Console.WriteLine(order.GetShippingLabel());
             Console.WriteLine($"Lives in USA: {order.GetCustomer().LivesInUSA()}");
+            Console.WriteLine($"Products Total: ${order.GetProductsTotal():F2}");
+            Console.WriteLine($"Shipping Cost: ${order.GetShippingCost():F2}");
             Console.WriteLine($"Total Price: ${order.GetTotalCost():F2}");
             Console.WriteLine("-----------------------------------");
         }

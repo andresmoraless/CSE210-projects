@@ -34,4 +34,9 @@ public class Swimming : Activity
     {
         return GetMinutes() / GetDistance();
     }
+
+    public override double GetCaloriesBurned()
+    {
+        return GetMinutes() * 11;
+    }
 }
